@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205194728) do
+ActiveRecord::Schema.define(version: 20171205202120) do
+
+  create_table "comittees", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+  end
+
+  create_table "committee_members", force: :cascade do |t|
+    t.integer "committee_id"
+    t.integer "congressman_id"
+  end
 
   create_table "congressmen", force: :cascade do |t|
     t.string "short_title"
