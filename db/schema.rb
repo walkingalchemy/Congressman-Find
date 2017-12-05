@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205202120) do
+ActiveRecord::Schema.define(version: 20171205213756) do
 
   create_table "comittees", force: :cascade do |t|
     t.string "name"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20171205202120) do
     t.string "state"
     t.string "state_rank"
     t.float "votes_with_party_pct"
+    t.integer "state_id"
+    t.integer "party_id"
   end
 
   create_table "parties", force: :cascade do |t|
