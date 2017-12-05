@@ -1,38 +1,33 @@
 class Adapter
 
-attr_reader :response, :data
+class Congressman_Adapter
+
+attr_reader :senate_response, :house_response, :senate_data, :house_data, :all_members
 
   def initialize
-    url = "https://api.propublica.org/congress/v1/115/senate/members.json"
-    @response = RestClient.get(url, {"X-API-KEY" => "2QhdrNtphd4PySwo0wofHyi6udSfrLvLe1nhhl3H"})
+    senate_url = "https://api.propublica.org/congress/v1/115/senate/members.json"
+    @senate_response = RestClient.get(senate_url, {"X-API-KEY" => "2QhdrNtphd4PySwo0wofHyi6udSfrLvLe1nhhl3H"})
+    house_url =
+"https://api.propublica.org/congress/v1/115/house/members.json"
+    @house_response = RestClient.get(house_url, {"X-API-KEY" => "2QhdrNtphd4PySwo0wofHyi6udSfrLvLe1nhhl3H"})
   end
 
   def usable_data
-      @data = JSON.parse(self.response)
+      @senate_data = JSON.parse(self.senate_response)
+      @house_data = JSON.parse(self.house_response)
+      senate_members = @senate_data["results"][0]["members"]
+      house_members = @house_data["results"][0]["members"]
+      @all_members = []
+      @all_members << senate_members
+      @all_members << house_members
+      @all_members.flatten
   end
 
-
-# url = "https://api.propublica.org/congress/v1/115/senate/members.json"
-  # def add_to_table
-  #     member_data = self.usable_data["results"][0]["members"][0]
-  #     member_data.each do |member|
-  #       puts member["first_name"] + member["last_name"]
-  #       # Congressman.create
-  #     end
-  # end
-
 end
 
-test1 = Adapter.new
+end
+test1 = Congressman_Adapter.new
 test2 = test1.usable_data
-members = test2["results"][0]["members"]
-members.each do |member|
-  puts "#{member["first_name"]} #{member["last_name"]}"
-end
-
-# test3 = test2.add_to_table
-# test4 = test3[0]# test2.add_to_table
-# # class2 = class1["membs
 binding.pry
 
 test3 = "Test"
