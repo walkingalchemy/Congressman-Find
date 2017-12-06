@@ -12,7 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20171205213756) do
 
-  create_table "comittees", force: :cascade do |t|
+  create_table "committee_members", force: :cascade do |t|
+    t.integer "committee_id"
+    t.integer "congressman_id"
+  end
+
+  create_table "committees", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.string "chamber"
@@ -21,11 +26,6 @@ ActiveRecord::Schema.define(version: 20171205213756) do
     t.string "chair"
     t.string "chair_id"
     t.string "ranking_member_id"
-  end
-
-  create_table "committee_members", force: :cascade do |t|
-    t.integer "committee_id"
-    t.integer "congressman_id"
   end
 
   create_table "congressmen", force: :cascade do |t|

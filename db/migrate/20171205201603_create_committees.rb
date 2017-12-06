@@ -1,6 +1,6 @@
 class CreateCommittees < ActiveRecord::Migration[5.1]
   def change
-    create_table :comittees do |t|
+    create_table :committees do |t|
       t.string :name
       t.string :description
       t.string :chamber

@@ -1,5 +1,3 @@
-require_relative 'config/environment'
-
 will = Congressman.create(first_name: "William", last_name: "Rob")
 jane = Congressman.create(first_name: "Jane", last_name: "Fonda")
 
@@ -13,5 +11,4 @@ nj = State.create(name: "New Jersey", abbreviation: "NJ")
 
 wandm = Committee.create(name: "Ways and Means", abbreviation: "SSRI")
 
-binding.pry
-help = "help!"
+will.committees << wandm
