@@ -16,7 +16,7 @@ class CreateCongressmen < ActiveRecord::Migration[5.1]
       t.string :url
       t.string :contact_form
       t.boolean :in_office
-      t.datetime :next_election
+      t.string :next_election
       t.integer :total_votes
       t.integer :missed_votes
       t.string :office_address
