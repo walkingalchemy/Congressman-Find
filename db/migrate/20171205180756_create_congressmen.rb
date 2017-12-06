@@ -7,7 +7,8 @@ class CreateCongressmen < ActiveRecord::Migration[5.1]
       t.string :last_name
       t.string :api_uri
       t.string :api_id
-      t.integer :party
+      t.string :party_name
+      t.integer :party_id
       t.string  :leadership_role
       t.string :twitter_account
       t.string :facebook_account
@@ -21,7 +22,8 @@ class CreateCongressmen < ActiveRecord::Migration[5.1]
       t.string :office_address
       t.string :phone
       t.string :fax
-      t.string :state
+      t.string :state_name
+      t.integer :state_id
       t.string :state_rank
       t.float :votes_with_party_pct
     end

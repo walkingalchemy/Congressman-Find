@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205213756) do
+ActiveRecord::Schema.define(version: 20171205202120) do
 
   create_table "committee_members", force: :cascade do |t|
     t.integer "committee_id"
@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20171205213756) do
 
   create_table "committees", force: :cascade do |t|
     t.string "name"
-    t.string "description"
     t.string "chamber"
     t.string "abbreviation"
     t.string "url"
@@ -35,7 +34,8 @@ ActiveRecord::Schema.define(version: 20171205213756) do
     t.string "last_name"
     t.string "api_uri"
     t.string "api_id"
-    t.integer "party"
+    t.string "party_name"
+    t.integer "party_id"
     t.string "leadership_role"
     t.string "twitter_account"
     t.string "facebook_account"
@@ -49,11 +49,10 @@ ActiveRecord::Schema.define(version: 20171205213756) do
     t.string "office_address"
     t.string "phone"
     t.string "fax"
-    t.string "state"
+    t.string "state_name"
+    t.integer "state_id"
     t.string "state_rank"
     t.float "votes_with_party_pct"
-    t.integer "state_id"
-    t.integer "party_id"
   end
 
   create_table "parties", force: :cascade do |t|

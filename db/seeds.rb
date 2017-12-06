@@ -1,14 +1,104 @@
-will = Congressman.create(first_name: "William", last_name: "Rob")
-jane = Congressman.create(first_name: "Jane", last_name: "Fonda")
 
-marsha = Congressman.create(first_name: "Marsha", middle_name: "T", last_name: "Warshington")
+require 'pry'
+# Getting committee abbreviations from api ids
+committee_abbreviations = Committee_Adapter.new.usable_data.map {|comm| comm["id"]}
+# Using committee abbreviations to find full committee info
+   def get_detailed_committee_info(array)
+     answers = []
+     array.each do |code|
+       url =  "https://api.propublica.org/congress/v1/115/senate/committees/#{code}.json"
+       response = RestClient.get(url, {"X-API-KEY" => ENV['CONGRESS_API_KEY']})
+       data = JSON.parse(response)
+       useable_data = data["results"]
+       answers << useable_data
+     end
+     answers.flatten
+   end
 
-rep = Party.create(name: "Republican")
-dem = Party.create(name: "Democrat")
+# Array of hashes for individual committees
+committees = get_detailed_committee_info(committee_abbreviations)
+# Array of hashes for individual congressmen
+congressmen = Congressman_Adapter.new.usable_data
 
-ny = State.create(name: "New York", abbreviation: "NY")
-nj = State.create(name: "New Jersey", abbreviation: "NJ")
+def put_congressmen_into_datatable(array_of_hashes)
+  array_of_hashes.each do |person|
+    congressman = Congressman.create(
+       short_title: person["short_title"],
+       first_name: person["first_name"],
+       middle_name: person["middle_name"],
+       last_name: person["last_name"],
+       api_uri: person["api_uri"],
+       api_id: person["api_id"],
+       party_name: person["party"],
+       # party_id: person["party_id"],
+       leadership_role: person["leadership_role"],
+       twitter_account: person["twitter_account"],
+       facebook_account: person["facebook_account"],
+       youtube_account: person["youtube_account"],
+       url: person["url"],
+       contact_form: person["contact_form"],
+       in_office: person["in_office"],
+       next_election: person["next_election"],
+       total_votes: person["total_votes"],
+       missed_votes: person["missed_votes"],
+       office_address: person["office_address"],
+       phone: person["phone"],
+       fax: person["fax"],
+       state_name: person["state"],
+       # state_id: person["state_id"],
+       state_rank: person["state_rank"],
+       votes_with_party_pct: person["votes_with_party_pct"]
+    )
 
-wandm = Committee.create(name: "Ways and Means", abbreviation: "SSRI")
+    #look at person's party, if a party exists where   party.abbreviation == congressman.party_name add that party.id to the congressmans party_id
+    congressman.party_name
+    party = Party.find_or_create_by(abbreviation: congressman.party_name)
+    congressman.party_id = party.id
+    congressman.save
 
-will.committees << wandm
+
+    congressman.state_name
+    state = State.find_or_create_by(abbreviation: congressman.state_name)
+    congressman.state_id = state.id
+    congressman.save
+
+    #
+    # person.each do |key, value|
+    #   if (Congressman.method_defined? key) && (key != "party" && key != "state")
+    #     congressman.send((update),((self.id), value))
+    #   end
+    # end
+  end
+end
+
+def put_committees_into_datatable(array_of_hashes)
+  array_of_hashes.each do |committee|
+    Committee.create(
+      name: committee["name"],
+      chamber: committee["chamber"],
+      abbreviation: committee["id"],
+      url: committee["url"],
+      chair: committee["chair"],
+      chair_id: committee["chair_id"],
+      ranking_member_id: committee["ranking_member_id"]
+    )
+
+  end
+end
+
+def put_congressmen_into_committee_members(array_of_hashes)
+  array_of_hashes.each do |committee|
+    committee["current_members"].each do |member|
+      CommitteeMember.create(
+         congressman_id: Congressman.find_by(member["id"]).id,
+         committee_id: Committee.find_by(committee["id"].id)
+      )
+    end
+  end
+end
+# tester = committees.map do |committee| committee["name"] end
+  binding.pry
+# Seed DB with congressmen
+put_congressmen_into_datatable(congressmen)
+put_committees_into_datatable(committees)
+put_congressmen_into_datatable(committees)
