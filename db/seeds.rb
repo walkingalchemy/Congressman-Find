@@ -3,20 +3,35 @@ require 'pry'
 # Getting committee abbreviations from api ids
 committee_abbreviations = Committee_Adapter.new.usable_data.map {|comm| comm["id"]}
 # Using committee abbreviations to find full committee info
-   def get_detailed_committee_info(array)
+senate_ids = committee_abbreviations[0..20]
+house_ids = committee_abbreviations[21..41]
+joint_ids = committee_abbreviations[42..46]
+
+
+   def get_detailed_committee_info(array, chamber)
      answers = []
      array.each do |code|
-       url =  "https://api.propublica.org/congress/v1/115/senate/committees/#{code}.json"
+       url =  "https://api.propublica.org/congress/v1/115/#{chamber}/committees/#{code}.json"
        response = RestClient.get(url, {"X-API-KEY" => ENV['CONGRESS_API_KEY']})
        data = JSON.parse(response)
        useable_data = data["results"]
        answers << useable_data
-     end
-     answers.flatten
+   end
+   answers.flatten
+ end
+
+   def combine_committee_data(senate_ids,house_ids,joint_ids)
+     all_comms = []
+     all_comms << get_detailed_committee_info(senate_ids, "senate")
+     all_comms << get_detailed_committee_info(house_ids, "house")
+     all_comms << get_detailed_committee_info(joint_ids, "joint")
+     all_comms.flatten
    end
 
+
+
 # Array of hashes for individual committees
-committees = get_detailed_committee_info(committee_abbreviations)
+committees = combine_committee_data(senate_ids,house_ids,joint_ids)
 # Array of hashes for individual congressmen
 congressmen = Congressman_Adapter.new.usable_data
 
@@ -28,7 +43,7 @@ def put_congressmen_into_datatable(array_of_hashes)
        middle_name: person["middle_name"],
        last_name: person["last_name"],
        api_uri: person["api_uri"],
-       api_id: person["api_id"],
+       api_id: person["id"],
        party_name: person["party"],
        # party_id: person["party_id"],
        leadership_role: person["leadership_role"],
@@ -90,15 +105,15 @@ def put_congressmen_into_committee_members(array_of_hashes)
   array_of_hashes.each do |committee|
     committee["current_members"].each do |member|
       CommitteeMember.create(
-         congressman_id: Congressman.find_by(member["id"]).id,
-         committee_id: Committee.find_by(committee["id"].id)
+         congressman_id: Congressman.find_by(api_id: member["id"]).id,
+         committee_id: Committee.find_by(abbreviation: committee["id"]).id
       )
     end
   end
 end
 # tester = committees.map do |committee| committee["name"] end
-  binding.pry
+  # binding.pry
 # Seed DB with congressmen
 put_congressmen_into_datatable(congressmen)
 put_committees_into_datatable(committees)
-put_congressmen_into_datatable(committees)
+put_congressmen_into_committee_members(committees)

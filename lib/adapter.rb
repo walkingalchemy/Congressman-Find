@@ -57,36 +57,3 @@ attr_reader :senate_committee_response, :house_committee_response, :joint_commit
 
 
 end
-
-
-# test1 = Congressman_Adapter.new
-# test2 = test1.usable_data
-#
-# test3 = Committee_Adapter.new
-# test4 = test3.usable_data
-# test5 = test4.map {|comm| comm["id"]}
-#
-#
-#
-#    def get_detailed_committee_info(array)
-#      answers = []
-#      array.each do |code|
-#        url =  "https://api.propublica.org/congress/v1/115/senate/committees/#{code}.json"
-#        response = RestClient.get(url, {"X-API-KEY" => ENV['CONGRESS_API_KEY']})
-#        data = JSON.parse(response)
-#        useable_data = data["results"]
-#        answers << useable_data
-#    end
-#    answers.flatten
-#  end
-#
-# test6 = get_detailed_committee_info(test5)
-#
-# def put_into_datatable(array_of_hashes)
-#   array_of_hashes.each do |person|
-#     Congressman.create(first_name: person["first_name"], last_name: person["last_name"], party: person["party"], )
-#   end
-# end
-# binding.pry
-#
-# test9 = "Test"
