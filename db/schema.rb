@@ -15,6 +15,12 @@ ActiveRecord::Schema.define(version: 20171205213756) do
   create_table "comittees", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.string "chamber"
+    t.string "abbreviation"
+    t.string "url"
+    t.string "chair"
+    t.string "chair_id"
+    t.string "ranking_member_id"
   end
 
   create_table "committee_members", force: :cascade do |t|
