@@ -15,23 +15,16 @@ GEM
     arel (7.1.4)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
-    congress_api (0.0.1)
-      hashie
-      httparty
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
-    hashie (3.5.6)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    httparty (0.15.6)
-      multi_xml (>= 0.5.2)
     i18n (0.8.1)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     minitest (5.10.1)
-    multi_xml (0.6.0)
     netrc (0.11.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -66,7 +59,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  congress_api
   pry
   require_all
   rest-client
