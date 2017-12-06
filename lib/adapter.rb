@@ -67,6 +67,7 @@ test4 = test3.usable_data
 test5 = test4.map {|comm| comm["id"]}
 
 
+
    def get_detailed_committee_info(array)
      answers = []
      array.each do |code|
@@ -81,7 +82,11 @@ test5 = test4.map {|comm| comm["id"]}
 
 test6 = get_detailed_committee_info(test5)
 
-
+def put_into_datatable(array_of_hashes)
+  array_of_hashes.each do |person|
+    Congressman.create(first_name: person["first_name"], last_name: person["last_name"], party: person["party"], )
+end
+end 
 binding.pry
 
 test9 = "Test"
