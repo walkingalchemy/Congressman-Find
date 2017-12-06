@@ -66,12 +66,16 @@ test3 = Committee_Adapter.new
 test4 = test3.usable_data
 test5 = test4.map {|comm| comm["id"]}
 
+# >>>>>>>>>>>>>>>>>>>>>>>>
+senate_ids = test5[0..20]
+house_ids = test5[21..41]
+joint_ids = test5[42..46]
 
 
-   def get_detailed_committee_info(array)
+   def get_detailed_committee_info(array, chamber)
      answers = []
      array.each do |code|
-       url =  "https://api.propublica.org/congress/v1/115/senate/committees/#{code}.json"
+       url =  "https://api.propublica.org/congress/v1/115/#{chamber}/committees/#{code}.json"
        response = RestClient.get(url, {"X-API-KEY" => ENV['CONGRESS_API_KEY']})
        data = JSON.parse(response)
        useable_data = data["results"]
@@ -80,13 +84,24 @@ test5 = test4.map {|comm| comm["id"]}
    answers.flatten
  end
 
-test6 = get_detailed_committee_info(test5)
+   def combine_committee_data(senate_ids,house_ids,joint_ids)
+     all_comms = []
+     all_comms << get_detailed_committee_info(senate_ids, "senate")
+     all_comms << get_detailed_committee_info(house_ids, "house")
+     all_comms << get_detailed_committee_info(joint_ids, "joint")
+     all_comms.flatten
+   end
+
+test10 = combine_committee_data(senate_ids,house_ids,joint_ids)
+
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
 def put_into_datatable(array_of_hashes)
   array_of_hashes.each do |person|
     Congressman.create(first_name: person["first_name"], last_name: person["last_name"], party: person["party"], )
 end
-end 
+end
 binding.pry
 
 test9 = "Test"
