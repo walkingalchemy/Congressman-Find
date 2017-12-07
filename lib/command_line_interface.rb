@@ -29,52 +29,88 @@ def exit_program
 end
 
 
-def state_loop(state_in_use)
-  puts <<-OUTPUT
-     Please select one of the following actions by number:
-     1. state summary
-     2. list of all congressmen and women for the state
-     3. list of who is up for election in 2018
-     4. home - return to main menu
-  OUTPUT
-  input2 = ""
-  while input2
-    input2 = gets.chomp
-    case input2
-  when '1'
-     state_in_use.party_summary
-   when '2'
-      state_in_use.get_congressmen
-    when '3'
-      state_in_use.up_for_next_election
-    when '4'
-      break
-    else
-      "Please enter a valid option"
-      end
-    end
-  end
+def state_loop(state_input)
+  state_in_use = State.get_by_initials(state_input)
+  if state_in_use
 
-
-  def person_loop(person_in_use)
     puts <<-OUTPUT
        Please select one of the following actions by number:
-       1. summary and contact information
-       2. list of all committees the congressman/woman is on
-       3. home - return to main menu
+       1. state summary
+       2. list of all congressmen and women for the state
+       3. list of who is up for election in 2018
+       4. home - return to main menu
     OUTPUT
     input2 = ""
     while input2
       input2 = gets.chomp
       case input2
     when '1'
-       person_in_use.basic_info
+       state_in_use.party_summary
      when '2'
-        person_in_use.find_committees
+        state_in_use.get_congressmen
       when '3'
+        state_in_use.up_for_next_election
+      when '4'
         break
       else
-        "Please enter a valid option"
+        puts <<-OUTPUT
+
+
+           Please select one of the following actions by number:
+           1. state summary
+           2. list of all congressmen and women for the state
+           3. list of who is up for election in 2018
+           4. home - return to main menu
+        OUTPUT
+        end
+      end
+    else
+    state_list = State.all.map {|s| s.abbreviation}
+    state_list.sort!
+    state_list.each {|s| puts "#{s}"}
+    puts "Please enter a valid state ID:"
+    state_input = gets.chomp
+    state_loop(state_input)
+    end
+  end
+
+
+  def person_loop(person_input)
+      person_in_use = Congressman.lookup(person_input)
+      if person_in_use
+        puts <<-OUTPUT
+           Please select one of the following actions by number:
+           1. summary and contact information
+           2. list of all committees the congressman/woman is on
+           3. home - return to main menu
+        OUTPUT
+        input2 = ""
+        while input2
+          input2 = gets.chomp
+          case input2
+        when '1'
+           person_in_use.basic_info
+         when '2'
+            person_in_use.find_committees
+          when '3'
+            break
+          else
+            # puts "Please enter a valid option"
+            puts <<-OUTPUT
+               Please select one of the following actions by number:
+               1. summary and contact information
+               2. list of all committees the congressman/woman is on
+               3. home - return to main menu
+            OUTPUT
+            end
+          end
+        else
+          puts "Please enter a valid name for a congressman or 'exit':"
+          person_input = gets.chomp
+         if person_input == "exit"
+          person_loop("Mitch McConnell")
+        else
+          person_loop(person_input)
         end
       end
     end
@@ -86,6 +122,7 @@ def state_loop(state_in_use)
         elsif
           Committee.info_name(committee_input)
         else
+
         end
       end
 
@@ -93,22 +130,19 @@ def run
   welcome
   input = ""
   while input
+    help
     puts "Please enter a command:"
     input = gets.chomp
     case input
-    when 'action'
-      puts "Action to come"
-    when 'select state'
+    when '1'
       puts "Please enter a state's initials (e.g. NJ)"
       state_input = gets.chomp
-      state_in_use = State.get_by_initials(state_input)
-      state_loop(state_in_use)
-    when 'find congressman'
+      state_loop(state_input)
+    when '2'
       puts "Please enter a congressman's name"
       person_input = gets.chomp
-      person_in_use = Congressman.lookup(person_input)
-      person_loop(person_in_use)
-    when 'find committee'
+      person_loop(person_input)
+    when '3'
       puts "Please enter a committee abbreviation, name, or 'list' (to see a full list of committees)"
       committee_input = gets.chomp
       if committee_input == "list"
@@ -116,9 +150,9 @@ def run
       else
       committee_loop(committee_input)
      end
-    when 'help'
+   when 'help' || '4'
       help
-    when 'exit'
+    when 'exit' || '5'
       exit_program
       break
     else
