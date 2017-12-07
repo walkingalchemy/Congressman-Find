@@ -1,21 +1,28 @@
 require_relative '../config/environment'
 
 #### State
-def members_by_state(state_initials)
-  State.find_by(abbreviation: state_initials).congressmen
+def get_state_by_initials(state_initials)
+  State.find_by(abbreviation: state_initials)
 end
 
-def party_counts_by_state(state_initials)
-  members_list = members_by_state(state_initials)
+
+def members_by_state(state)
+  state.congressmen
+end
+
+def party_counts_by_state(state)
+  members_list = members_by_state(state)
   pcounts = members_list.group(:party_id).count
 end
 
-def party_summary_by_state(state_initials)
-  pcounts.each {|p, c| puts "#{Party.find(p).abbreviation}: #{c}"}
+def party_summary_by_state(state)
+  party_counts_by_state(state).each do |p, c|
+    puts "#{Party.find(p).abbreviation}: #{c}"
+  end
 end
 
-def up_for_next_elecction_by_state(state_initials)
-   members_list = members_by_state(state_initials)
+def up_for_next_elecction_by_state(state)
+   members_list = members_by_state(state)
    up = members_list.select {|person| person[:next_election] == "2018"}
    up.each {|person| full_name(person)}
 end
