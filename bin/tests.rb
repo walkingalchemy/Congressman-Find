@@ -30,3 +30,44 @@ end
 def full_name(congressman)
   puts "#{congressman.short_title} #{congressman.first_name} #{congressman.middle_name} #{congressman.last_name} (#{congressman.party.abbreviation})"
 end
+
+def congressman_lookup(full_name_input)
+  name_array = full_name_input.split
+  f_name = name_array[0]
+  l_name = name_array[-1]
+  Congressman.find_by(first_name: f_name && last_name: l_name)
+end
+
+
+def congressman_basic_info(full_name_input)
+  selected = congressman_lookup(full_name_input)
+  output = <<-OUTPUT
+      Basic Information
+     #{selected.short_title}
+     #{selected.first_name}
+     #{selected.middle_name}
+     #{selected.last_name}
+     #{Party_find(selected.party_id).abbreviation}
+     #{selected.next_election}
+
+      Contact Information and Social Media
+     #{selected.office_address}
+     #{selected.phone}
+     #{selected.fax}
+     #{selected.twitter_account}
+     #{selcted.facebook_account}
+     #{selected.youtube_account}
+     #{selected.url}
+     #{selected.contact_form}
+  OUTPUT
+   puts output
+end
+
+
+def congressman_committees()
+  selected = congressman_lookup(full_name_input)
+  selected_comms = selected.committees
+  selected_comms.each do |committee|
+    puts "#{committee.name}"
+  end
+end
