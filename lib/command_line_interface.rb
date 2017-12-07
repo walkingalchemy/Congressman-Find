@@ -83,11 +83,11 @@ def state_loop(state_in_use)
       def committee_loop(committee_input)
         if committee_input.length < 5
            Committee.info_initials(committee_input)
-        elsif Committee.info_name(committee_input)
+        elsif
           Committee.info_name(committee_input)
         else
-    end
-  end
+        end
+      end
 
 def run
   welcome

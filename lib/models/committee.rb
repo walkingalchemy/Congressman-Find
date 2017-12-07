@@ -4,12 +4,12 @@ class Committee < ActiveRecord::Base
 
   def self.info_name(name)
     committee = Committee.find_by(name: name)
-    puts "#{committee.name}"
+    puts "#{committee.abbreviation}"
     puts "Committee Chair: #{committee.chair}"
     puts "Committee Members:"
     members = CommitteeMember.select {|cm| cm.committee_id == committee.id}
     members.each do |m|
-      Congressman.find(m.id).full_name
+      Congressman.find(m.congressman_id).full_name
     end
   end
 
@@ -26,7 +26,7 @@ class Committee < ActiveRecord::Base
     puts "Committee Members:"
     members = CommitteeMember.select {|cm| cm.committee_id == committee.id}
     members.each do |m|
-      Congressman.find(m.id).full_name
+      Congressman.find(m.congressman_id).full_name
     end
   end
 end
