@@ -20,6 +20,10 @@ def action
 # to come
 end
 
+def get_state_by_initials(state_initials)
+  State.find_by(abbreviation: state_initials)
+end
+
 def exit_program
   puts 'Goodbye'
 end
@@ -33,6 +37,11 @@ def run
     case input
     when 'action'
       puts "Action to come"
+    when 'select state'
+      puts "Please enter a state's initials (e.g. NJ)"
+      state = get_state_by_initials(gets.chomp)
+      puts state.abbreviation
+      state.congressmen.each {|c| puts c.full_name}
     when 'help'
       help
     when 'exit'
