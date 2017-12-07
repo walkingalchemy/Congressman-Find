@@ -19,7 +19,6 @@ class Committee < ActiveRecord::Base
     end
   end
 
-
   def self.info_initials(initials)
     committee = Committee.find_by(abbreviation: initials)
     puts "#{committee.name}"

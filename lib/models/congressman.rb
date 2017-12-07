@@ -15,34 +15,30 @@ class Congressman < ActiveRecord::Base
     Congressman.find_by(first_name: f_name, last_name: l_name)
   end
 
-  def self.basic_info(full_name_input)
-    selected = self.lookup(full_name_input)
-    selected_id = Party.find(selected.party_id).abbreviation
+  def basic_info
     output =
      <<-OUTPUT
        Basic Information
-       #{selected.short_title} #{selected.first_name} #{selected.middle_name} #{selected.last_name}
-       (#{selected_id})
-       Next election: #{selected.next_election}
+       #{self.short_title} #{self.first_name} #{self.middle_name} #{self.last_name}
+       (#{self.party_name})
+       Next election: #{self.next_election}
 
        Contact Information and Social Media
-       Office : #{selected.office_address}
-       Phone : #{selected.phone}
-       Fax : #{selected.fax}
-       Twitter : #{selected.twitter_account}
-       Facebook : #{selected.facebook_account}
-       Youtube : #{selected.youtube_account}
-       Website : #{selected.url}
-       Email Link : #{selected.contact_form}
+       Office : #{self.office_address}
+       Phone : #{self.phone}
+       Fax : #{self.fax}
+       Twitter : #{self.twitter_account}
+       Facebook : #{self.facebook_account}
+       Youtube : #{self.youtube_account}
+       Website : #{self.url}
+       Email Link : #{self.contact_form}
                     (Copy into browser)
      OUTPUT
     puts output
   end
 
-  def self.committees(full_name_input)
-    selected = self.lookup(full_name_input)
-    selected_comms = selected.committees
-    selected_comms.each_with_index do |committee, index|
+  def find_committees
+    self.committees.each_with_index do |committee, index|
       puts "#{index + 1}. #{committee.abbreviation}  -  #{committee.name}"
     end
   end
