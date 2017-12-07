@@ -6,11 +6,15 @@ def help
    help = <<-INTRO
    You have the following options:
    1. Enter a state to see your senators and representatives
+      Enter a state to see a summary of the parties
+   5. Enter "state".reelection to see the who is up for reelection in 2018
+
    2. Enter a name to see details about a specific person
    3. Enter "name".committees to see the committee membership
+
    4. Enter a committee name to see the details and membership
-   5. Enter "state".reelection to see the who is up for reelection in 2018
    6. Enter "commitee".subcommittees to see all of the the subcommittees
+
    7. Enter help to see this list again
    INTRO
    puts help
