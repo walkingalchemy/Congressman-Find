@@ -16,9 +16,6 @@ def help
    puts help
 end
 
-def action
-# to come
-end
 
 def exit_program
   puts 'Goodbye'
@@ -93,7 +90,6 @@ def state_loop(state_input)
           when '3'
             break
           else
-            # puts "Please enter a valid option"
             puts <<-OUTPUT
 
                Please select one of the following actions by number:
@@ -167,8 +163,3 @@ def run
     end
   end
 end
-
-
-
-
-# binding.pry

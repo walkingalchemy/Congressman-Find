@@ -1,5 +1,3 @@
-
-require 'pry'
 # Getting committee abbreviations from api ids
 committee_abbreviations = Committee_Adapter.new.usable_data.map {|comm| comm["id"]}
 # Using committee abbreviations to find full committee info
@@ -76,13 +74,6 @@ def put_congressmen_into_datatable(array_of_hashes)
     state = State.find_or_create_by(abbreviation: congressman.state_name)
     congressman.state_id = state.id
     congressman.save
-
-    #
-    # person.each do |key, value|
-    #   if (Congressman.method_defined? key) && (key != "party" && key != "state")
-    #     congressman.send((update),((self.id), value))
-    #   end
-    # end
   end
 end
 
@@ -111,8 +102,7 @@ def put_congressmen_into_committee_members(array_of_hashes)
     end
   end
 end
-# tester = committees.map do |committee| committee["name"] end
-  # binding.pry
+
 # Seed DB with congressmen
 put_congressmen_into_datatable(congressmen)
 put_committees_into_datatable(committees)
