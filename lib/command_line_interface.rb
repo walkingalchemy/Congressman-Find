@@ -155,8 +155,8 @@ def run
       else
       committee_loop(committee_input)
      end
-   when 'help' || '4'
-    when 'exit' || '5'
+   when '4'
+    when '5'
       exit_program
       break
     else
