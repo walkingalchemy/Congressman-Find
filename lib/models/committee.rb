@@ -29,4 +29,13 @@ class Committee < ActiveRecord::Base
       Congressman.find(m.congressman_id).full_name
     end
   end
+
+  def self.abbreviation_list
+   self.all.map {|comm| comm.abbreviation}
+  end
+
+  def self.name_list
+   self.all.map {|comm| comm.name}
+  end
+
 end

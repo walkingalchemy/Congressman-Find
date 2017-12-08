@@ -117,14 +117,23 @@ def state_loop(state_input)
 
 
       def committee_loop(committee_input)
-        if committee_input.length < 5
-           Committee.info_initials(committee_input)
-        elsif
-          Committee.info_name(committee_input)
-        else
-
-        end
+        if Committee.name_list.include?(committee_input) || Committee.abbreviation_list.include?(committee_input)
+          if committee_input.length < 5
+            Committee.info_initials(committee_input)
+          else
+            Committee.info_name(committee_input)
+          end
+       elsif committee_input == "list"
+            Committee.list
+            puts "Please enter valid committee name"
+            committee_input = gets.chomp
+            committee_loop(committee_input)
+      else
+        puts "Please enter valid committee name"
+        committee_input = gets.chomp
+        committee_loop(committee_input)
       end
+    end
 
 def run
   welcome
