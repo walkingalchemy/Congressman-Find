@@ -4,18 +4,14 @@ end
 
 def help
    help = <<-INTRO
-   You have the following options:
+
+   You have the following options (select by number):
    1. Select State (will be prompted to enter a state )
-     A. Summary of congressmen by party
-     B. See your senators and representatives
-     C. See who is up for reelection in 2018
    2. Find Congressman (will be prompted to enter a name)
-     A. View details about a specific person
-     B. Review the committee membership
-   3.  Find a Committee (will be prompted for name or abbreviation)
-     A. Enter a committee name to see the details and membership
+   3. Find a Committee (will be prompted for name or abbreviation)
    4. Help to see this list again
    5. Exit
+
    INTRO
    puts help
 end
@@ -55,12 +51,12 @@ def state_loop(state_input)
       else
         puts <<-OUTPUT
 
-
            Please select one of the following actions by number:
            1. state summary
            2. list of all congressmen and women for the state
            3. list of who is up for election in 2018
            4. home - return to main menu
+
         OUTPUT
         end
       end
@@ -79,10 +75,12 @@ def state_loop(state_input)
       person_in_use = Congressman.lookup(person_input)
       if person_in_use
         puts <<-OUTPUT
+
            Please select one of the following actions by number:
            1. summary and contact information
            2. list of all committees the congressman/woman is on
            3. home - return to main menu
+
         OUTPUT
         input2 = ""
         while input2
@@ -97,10 +95,12 @@ def state_loop(state_input)
           else
             # puts "Please enter a valid option"
             puts <<-OUTPUT
+
                Please select one of the following actions by number:
                1. summary and contact information
                2. list of all committees the congressman/woman is on
                3. home - return to main menu
+
             OUTPUT
             end
           end
@@ -125,11 +125,11 @@ def state_loop(state_input)
           end
        elsif committee_input == "list"
             Committee.list
-            puts "Please enter valid committee name"
+            puts "Please enter valid committee name or abbreviation"
             committee_input = gets.chomp
             committee_loop(committee_input)
       else
-        puts "Please enter valid committee name"
+        puts "Please enter valid committee name or abbreviation"
         committee_input = gets.chomp
         committee_loop(committee_input)
       end
@@ -160,12 +160,10 @@ def run
       committee_loop(committee_input)
      end
    when 'help' || '4'
-      help
     when 'exit' || '5'
       exit_program
       break
     else
-      help
     end
   end
 end

@@ -5,7 +5,7 @@ class Congressman < ActiveRecord::Base
   has_many :committees, through: :committee_members
 
   def full_name
-    puts "#{self.short_title} #{self.first_name} #{self.middle_name} #{self.last_name} (#{self.party.abbreviation})"
+    print "#{self.short_title} #{self.first_name} #{self.middle_name} #{self.last_name} (#{self.party.abbreviation})"
   end
 
   def self.lookup(full_name_input)
@@ -39,7 +39,7 @@ class Congressman < ActiveRecord::Base
 
   def find_committees
     self.committees.each_with_index do |committee, index|
-      puts "#{index + 1}. #{committee.abbreviation}  -  #{committee.name}"
+      puts "#{committee.abbreviation}  -  #{committee.name}"
     end
   end
 

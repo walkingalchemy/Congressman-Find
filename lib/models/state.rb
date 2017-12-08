@@ -26,6 +26,6 @@ end
   def up_for_next_election
      members_list = self.congressmen
      up = members_list.select {|congressman| congressman[:next_election] == "2018"}
-     up.each {|congressman| congressman.full_name}
+     up.each {|congressman| puts congressman.full_name}
   end
 end
