@@ -25,21 +25,6 @@ From there it can be run with:
 ruby bin/run.rb
 ```
 
-## Api Reference
-```
-     api_v1_boards GET   /api/v1/boards(.:format)                                  api/v1/boards#index
-      api_v1_board GET   /api/v1/boards/:id(.:format)                              api/v1/boards#show
-      api_v1_users POST  /api/v1/users(.:format)                                   api/v1/users#create
-       api_v1_user PATCH /api/v1/users/:id(.:format)                               api/v1/users#update
-                   PUT   /api/v1/users/:id(.:format)                               api/v1/users#update
-            api_v1 GET   /api/v1/users/:name(.:format)                             api/v1/users#show
-api_v1_board_users POST  /api/v1/board_users(.:format)                             api/v1/board_users#create
-                   GET   /api/v1/board_users/:user_id/:board_id(.:format)          api/v1/board_users#show
-                   PATCH /api/v1/board_users/:user_id/:board_id(.:format)          api/v1/board_users#update
-                   PATCH /api/v1/board_users/progress/:user_id/:board_id(.:format) api/v1/board_users#update_progress
-
-```
-
 ## Licensing
 [MIT](https://oss.ninja/mit?organization=Sebastian%20Royer) 
 Copyright 2018 [Sebastian Royer](https://github.com/walkingalchemy) and [Lindsay Davis](https://github.com/L-A-Davis)
