@@ -1,7 +1,8 @@
 <p align="center"><img src="https://png.icons8.com/dusk/64/000000/parliament.png"></p>
 
 # Welcome to Congressman Find
-> A dynamic crossword web app
+> A simple CLI to discover information about U.S. Congressional Representatives
+
 
 Congressman Find is a command line interface to discover current information about the members and committees of the United States Congress.  Using information from [ProPublica](https://www.propublica.org/)'s excellent [Congress API](https://projects.propublica.org/api-docs/congress-api/) it can display Representatives and Senators based on location or committee and deliver the contact information of their offices and social media accounts.
 
