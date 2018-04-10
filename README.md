@@ -6,7 +6,9 @@
 
 Congressman Find is a command line interface to discover current information about the members and committees of the United States Congress.  Using information from [ProPublica](https://www.propublica.org/)'s excellent [Congress API](https://projects.propublica.org/api-docs/congress-api/) it can display Representatives and Senators based on location or committee and deliver the contact information of their offices and social media accounts.
 
-
+# Demo
+<a href="https://youtu.be/sEPUlNKudew" target="_blank"><img src="http://img.youtube.com/vi/sEPUlNKudew/0.jpg" 
+alt="Janx Thumbnail" width="240" height="180" border="10" /></a>
 
 ## Installing / Getting started
 
